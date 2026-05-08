@@ -1,9 +1,13 @@
+package model;
+
 public class Instrutor extends Pessoa {
 
     private String cref;
     private String especialidade;
     private double salario;
     private int alunosOrientados;
+
+    public Instrutor() {}
 
     public Instrutor(int id, String nome, String cpf, int idade, String telefone,
                      String cref, String especialidade, double salario) {
@@ -15,9 +19,9 @@ public class Instrutor extends Pessoa {
     }
 
     // Getters
-    public String getCref() { return cref; }
+    public String getCref()          { return cref; }
     public String getEspecialidade() { return especialidade; }
-    public double getSalario() { return salario; }
+    public double getSalario()       { return salario; }
     public int getAlunosOrientados() { return alunosOrientados; }
 
     // Setters
@@ -38,6 +42,11 @@ public class Instrutor extends Pessoa {
         this.salario = salario;
     }
 
+    public void setAlunosOrientados(int alunosOrientados) {
+        if (alunosOrientados < 0) throw new IllegalArgumentException("Alunos orientados não pode ser negativo.");
+        this.alunosOrientados = alunosOrientados;
+    }
+
     public void incrementarAlunosOrientados() {
         alunosOrientados++;
     }
@@ -53,7 +62,6 @@ public class Instrutor extends Pessoa {
     }
 
     public double calcularBonus(int alunosExtra) {
-        // R$50 por aluno extra além da meta de 10
         double bonusExtra = alunosExtra > 10 ? (alunosExtra - 10) * 50.0 : 0;
         return calcularBonus() + bonusExtra;
     }
@@ -64,14 +72,11 @@ public class Instrutor extends Pessoa {
     }
 
     @Override
-    public void exibirInfo(boolean detalhado) {
-        super.exibirInfo(detalhado);
-        if (detalhado) {
-            System.out.println("CREF    : " + cref);
-            System.out.println("Espec.  : " + especialidade);
-            System.out.printf("Salário : R$%.2f (Bônus: R$%.2f)%n", salario, calcularBonus());
-            System.out.println("Alunos  : " + alunosOrientados);
-        }
+    public void exibirDetalhesEspecificos() {
+        System.out.println("CREF    : " + cref);
+        System.out.println("Espec.  : " + especialidade);
+        System.out.printf("Salário : R$%.2f (Bônus: R$%.2f)%n", salario, calcularBonus());
+        System.out.println("Alunos  : " + alunosOrientados);
     }
 
     @Override

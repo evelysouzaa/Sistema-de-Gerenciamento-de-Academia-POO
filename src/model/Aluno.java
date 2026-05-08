@@ -1,3 +1,5 @@
+package model;
+
 public class Aluno extends Pessoa {
 
     private double peso;
@@ -5,9 +7,11 @@ public class Aluno extends Pessoa {
     private String plano; // Mensal, Trimestral, Anual
     private int mesesCadastrado;
 
+    public Aluno() {}
+
     public Aluno(int id, String nome, String cpf, int idade, String telefone,
                  double peso, double altura, String plano, int mesesCadastrado) {
-        super(id, nome, cpf, idade, telefone); // chama construtor de Pessoa
+        super(id, nome, cpf, idade, telefone);
         setPeso(peso);
         setAltura(altura);
         setPlano(plano);
@@ -15,10 +19,10 @@ public class Aluno extends Pessoa {
     }
 
     // Getters
-    public double getPeso() { return peso; }
-    public double getAltura() { return altura; }
-    public String getPlano() { return plano; }
-    public int getMesesCadastrado() { return mesesCadastrado; }
+    public double getPeso()          { return peso; }
+    public double getAltura()        { return altura; }
+    public String getPlano()         { return plano; }
+    public int getMesesCadastrado()  { return mesesCadastrado; }
 
     // Setters com validação
     public void setPeso(double peso) {
@@ -47,7 +51,6 @@ public class Aluno extends Pessoa {
         return peso / (altura * altura);
     }
 
-    // Sobrecarga: desconto simples ou com número de meses informado
     public double calcularDesconto() {
         return calcularDesconto(mesesCadastrado);
     }
@@ -75,13 +78,15 @@ public class Aluno extends Pessoa {
     }
 
     @Override
+    public void exibirDetalhesEspecificos() {
+        System.out.printf("Plano   : %s (%d meses)%n", plano, mesesCadastrado);
+        System.out.printf("IMC     : %.2f → %s%n", calcularImc(), classificarImc());
+        System.out.printf("Desconto: %.0f%%%n", calcularDesconto());
+    }
+
+    @Override
     public void exibirInfo(boolean detalhado) {
-        super.exibirInfo(detalhado); // chama comportamento base
-        if (detalhado) {
-            System.out.printf("Plano   : %s (%d meses)%n", plano, mesesCadastrado);
-            System.out.printf("IMC     : %.2f → %s%n", calcularImc(), classificarImc());
-            System.out.printf("Desconto: %.0f%%%n", calcularDesconto());
-        }
+        super.exibirInfo(detalhado);
     }
 
     @Override

@@ -1,10 +1,19 @@
-public class Pessoa {
+package model;
+
+/**
+ * Classe abstrata que representa uma pessoa no sistema da academia.
+ * Contém atributos e comportamentos comuns a Aluno, Instrutor e Funcionario.
+ */
+public abstract class Pessoa {
 
     protected int id;
     protected String nome;
     protected String cpf;
     protected int idade;
     protected String telefone;
+
+    // Construtor padrão necessário para o DAO (ao reconstruir do banco)
+    public Pessoa() {}
 
     public Pessoa(int id, String nome, String cpf, int idade, String telefone) {
         setId(id);
@@ -15,10 +24,10 @@ public class Pessoa {
     }
 
     // Getters
-    public int getId() { return id; }
-    public String getNome() { return nome; }
-    public String getCpf() { return cpf; }
-    public int getIdade() { return idade; }
+    public int getId()        { return id; }
+    public String getNome()   { return nome; }
+    public String getCpf()    { return cpf; }
+    public int getIdade()     { return idade; }
     public String getTelefone() { return telefone; }
 
     // Setters com validação
@@ -51,12 +60,18 @@ public class Pessoa {
         this.telefone = telefone;
     }
 
-    // Método polimórfico — cada subclasse terá sua apresentação
-    public String getTipo() {
-        return "Pessoa";
+    // Método concreto — comportamento comum a todos
+    public String obterContato() {
+        return "Telefone: " + telefone;
     }
 
-    // Sobrecarga: exibir com ou sem detalhe
+    // Método abstrato — cada subclasse define seu tipo
+    public abstract String getTipo();
+
+    // Método abstrato — cada subclasse exibe suas permissões/detalhes específicos
+    public abstract void exibirDetalhesEspecificos();
+
+    // Sobrecarga: exibir simples ou detalhado
     public void exibirInfo() {
         System.out.println(this);
     }
@@ -70,6 +85,7 @@ public class Pessoa {
             System.out.println("CPF     : " + cpf);
             System.out.println("Idade   : " + idade);
             System.out.println("Telefone: " + telefone);
+            exibirDetalhesEspecificos(); // método abstrato chamado polimorficamente
         } else {
             exibirInfo();
         }

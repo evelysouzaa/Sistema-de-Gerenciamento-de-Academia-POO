@@ -1,3 +1,4 @@
+
 # Sistema-de-Gerenciamento-de-Academia-POO-BD
  
 ## 👥 Integrantes do Grupo
@@ -56,7 +57,43 @@ Pessoa (superclasse)
 Ao registrar uma avaliação física, o sistema calcula automaticamente o IMC do aluno (`peso / altura²`) e o classifica (Abaixo do peso, Normal, Sobrepeso, Obesidade). Com base nessa classificação e no tempo de permanência do aluno na academia, o sistema aplica um desconto progressivo na mensalidade:
  
 - Aluno com IMC normal + mais de 12 meses = **15% de desconto**
-- Aluno com IMC normal + entre 6 e 12 meses = **10% de desconto**
-- Aluno com IMC fora do normal + mais de 12 meses = **5% de desconto** (fidelidade)
-- Demais casos = **sem desconto**
-Essa regra incentiva a permanência e o alcance de resultados saudáveis.
+
+# 🏋️ Sistema de Gerenciamento de Academia — Checkpoint 3
+
+## O que foi implementado
+
+###  1. Classe Abstrata (`Pessoa`)
+- `Pessoa` tornou-se **abstrata**, impedindo instanciação direta
+- Atributos comuns mantidos como `protected`: `id`, `nome`, `cpf`, `idade`, `telefone`
+- Método concreto: `obterContato()` — comportamento comum a todos
+- **Método abstrato 1:** `getTipo()` — cada subclasse retorna seu tipo
+- **Método abstrato 2:** `exibirDetalhesEspecificos()` — cada subclasse imprime seus dados próprios
+- Subclasses: `Aluno`, `Instrutor`, `Funcionario` (implementam os dois métodos abstratos)
+
+###  2. Padrão DAO com JDBC
+| Arquivo | Responsabilidade |
+|---|---|
+| `dao/ConexaoBD.java` | Gerencia conexão JDBC com PostgreSQL |
+| `dao/AlunoDAO.java` | CRUD completo da tabela `aluno` |
+| `dao/InstrutorDAO.java` | CRUD completo da tabela `instrutor` |
+| `dao/FuncionarioDAO.java` | CRUD completo da tabela `funcionario` |
+| `dao/PagamentoDAO.java` | CRUD completo da tabela `pagamento` |
+
+Cada DAO usa:
+- `PreparedStatement` (previne SQL Injection)
+- `try-with-resources` (garante fechamento de conexões)
+- `RETURN_GENERATED_KEYS` para obter ID gerado no INSERT
+
+
+##  Conceitos aplicados
+
+| Conceito | Onde |
+|---|---|
+| Classe abstrata | `model/Pessoa.java` |
+| Métodos abstratos | `getTipo()` e `exibirDetalhesEspecificos()` |
+| Herança | `Aluno`, `Instrutor`, `Funcionario` extends `Pessoa` |
+| Polimorfismo | `listarAlunos()` chama `getTipo()` e `exibirInfo()` da subclasse correta |
+| Padrão DAO | Todo pacote `dao/` |
+| JDBC + PreparedStatement | Todos os DAOs |
+| try-with-resources | Todos os blocos de conexão |
+| Organização em pacotes | `model`, `dao`, `util` |

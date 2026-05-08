@@ -1,9 +1,13 @@
+package model;
+
 public class Funcionario extends Pessoa {
 
     private String cargo;
     private String setor;
     private double salario;
     private int horasSemanais;
+
+    public Funcionario() {}
 
     public Funcionario(int id, String nome, String cpf, int idade, String telefone,
                        String cargo, String setor, double salario, int horasSemanais) {
@@ -15,9 +19,9 @@ public class Funcionario extends Pessoa {
     }
 
     // Getters
-    public String getCargo() { return cargo; }
-    public String getSetor() { return setor; }
-    public double getSalario() { return salario; }
+    public String getCargo()      { return cargo; }
+    public String getSetor()      { return setor; }
+    public double getSalario()    { return salario; }
     public int getHorasSemanais() { return horasSemanais; }
 
     // Setters
@@ -66,14 +70,11 @@ public class Funcionario extends Pessoa {
     }
 
     @Override
-    public void exibirInfo(boolean detalhado) {
-        super.exibirInfo(detalhado);
-        if (detalhado) {
-            System.out.println("Cargo   : " + cargo);
-            System.out.println("Setor   : " + setor);
-            System.out.printf("Salário : R$%.2f%n", salario);
-            System.out.println("Horas/s : " + horasSemanais + "h");
-        }
+    public void exibirDetalhesEspecificos() {
+        System.out.println("Cargo   : " + cargo);
+        System.out.println("Setor   : " + setor);
+        System.out.printf("Salário : R$%.2f%n", salario);
+        System.out.println("Horas/s : " + horasSemanais + "h");
     }
 
     @Override
