@@ -1,12 +1,6 @@
--- ============================================================
--- Script de criação do banco de dados: academia
--- PostgreSQL
--- ============================================================
 
--- Criar banco (execute fora do script se necessário):
--- CREATE DATABASE academia;
 
--- ── Tabela: aluno ─────────────────────────────────────────
+-- ── Tabela: aluno 
 CREATE TABLE IF NOT EXISTS aluno (
     id               SERIAL PRIMARY KEY,
     nome             VARCHAR(100) NOT NULL,
@@ -19,7 +13,7 @@ CREATE TABLE IF NOT EXISTS aluno (
     meses_cadastrado INTEGER      NOT NULL DEFAULT 0 CHECK (meses_cadastrado >= 0)
 );
 
--- ── Tabela: instrutor ─────────────────────────────────────
+-- ── Tabela: instrutor
 CREATE TABLE IF NOT EXISTS instrutor (
     id                SERIAL PRIMARY KEY,
     nome              VARCHAR(100) NOT NULL,
@@ -32,7 +26,7 @@ CREATE TABLE IF NOT EXISTS instrutor (
     alunos_orientados INTEGER       NOT NULL DEFAULT 0 CHECK (alunos_orientados >= 0)
 );
 
--- ── Tabela: funcionario ───────────────────────────────────
+-- ── Tabela: funcionario
 CREATE TABLE IF NOT EXISTS funcionario (
     id             SERIAL PRIMARY KEY,
     nome           VARCHAR(100)  NOT NULL,
@@ -45,7 +39,7 @@ CREATE TABLE IF NOT EXISTS funcionario (
     horas_semanais INTEGER       NOT NULL CHECK (horas_semanais BETWEEN 1 AND 44)
 );
 
--- ── Tabela: pagamento ─────────────────────────────────────
+-- ── Tabela: pagamento
 CREATE TABLE IF NOT EXISTS pagamento (
     id                SERIAL PRIMARY KEY,
     aluno_id          INTEGER        NOT NULL REFERENCES aluno(id) ON DELETE CASCADE,
@@ -56,7 +50,7 @@ CREATE TABLE IF NOT EXISTS pagamento (
     status            VARCHAR(20)    NOT NULL DEFAULT 'Pendente'
 );
 
--- ── Tabela: avaliacao_fisica ──────────────────────────────
+-- ── Tabela: avaliacao_fisica
 CREATE TABLE IF NOT EXISTS avaliacao_fisica (
     id                 SERIAL PRIMARY KEY,
     aluno_id           INTEGER       NOT NULL REFERENCES aluno(id) ON DELETE CASCADE,
@@ -66,7 +60,7 @@ CREATE TABLE IF NOT EXISTS avaliacao_fisica (
     data_avaliacao     VARCHAR(10)   NOT NULL
 );
 
--- ── Tabela: ficha_treino ──────────────────────────────────
+-- ── Tabela: ficha_treino 
 CREATE TABLE IF NOT EXISTS ficha_treino (
     id           SERIAL PRIMARY KEY,
     aluno_id     INTEGER      NOT NULL REFERENCES aluno(id)    ON DELETE CASCADE,
@@ -76,7 +70,7 @@ CREATE TABLE IF NOT EXISTS ficha_treino (
     data_inicio  VARCHAR(10)  NOT NULL
 );
 
--- ── Dados de exemplo (opcional) ───────────────────────────
+-- ── Dados de exemplo (opcional)
 INSERT INTO aluno (nome, cpf, idade, telefone, peso, altura, plano, meses_cadastrado)
 VALUES ('Ana Paula Silva', '12345678901', 25, '(13) 99001-1111', 62.0, 1.65, 'Mensal', 3);
 

@@ -14,7 +14,7 @@ public class PagamentoDAO {
 
     private final AlunoDAO alunoDAO = new AlunoDAO();
 
-    // ── CREATE ────────────────────────────────────────────────────────────────
+    // ── CREATE
 
     public boolean inserir(Pagamento pagamento) {
         String sql = "INSERT INTO pagamento (aluno_id, valor_mensalidade, desconto, data_vencimento, data_pagamento, status) " +
@@ -47,7 +47,7 @@ public class PagamentoDAO {
         }
     }
 
-    // ── READ: buscar por ID ───────────────────────────────────────────────────
+    // ── READ: buscar por ID 
 
     public Pagamento buscarPorId(int id) {
         String sql = "SELECT * FROM pagamento WHERE id = ?";
@@ -67,7 +67,7 @@ public class PagamentoDAO {
         return null;
     }
 
-    // ── READ: listar todos ────────────────────────────────────────────────────
+    // ── READ: listar todos
 
     public List<Pagamento> listarTodos() {
         List<Pagamento> pagamentos = new ArrayList<>();
@@ -86,7 +86,7 @@ public class PagamentoDAO {
         return pagamentos;
     }
 
-    // ── UPDATE ────────────────────────────────────────────────────────────────
+    // ── UPDATE 
 
     public boolean atualizar(Pagamento pagamento) {
         String sql = "UPDATE pagamento SET aluno_id = ?, valor_mensalidade = ?, desconto = ?, " +
@@ -119,7 +119,7 @@ public class PagamentoDAO {
         }
     }
 
-    // ── DELETE ────────────────────────────────────────────────────────────────
+    // ── DELETE 
 
     public boolean excluir(int id) {
         String sql = "DELETE FROM pagamento WHERE id = ?";
@@ -144,7 +144,7 @@ public class PagamentoDAO {
         }
     }
 
-    // ── Auxiliar ──────────────────────────────────────────────────────────────
+    // ── Auxiliar 
 
     private Pagamento extrairPagamentoDoResultSet(ResultSet rs) throws SQLException {
         Pagamento p = new Pagamento();

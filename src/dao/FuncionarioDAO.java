@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class FuncionarioDAO {
 
-    // ── CREATE ────────────────────────────────────────────────────────────────
+    // ── CREATE 
 
     public boolean inserir(Funcionario funcionario) {
         String sql = "INSERT INTO funcionario (nome, cpf, idade, telefone, cargo, setor, salario, horas_semanais) " +
@@ -46,7 +46,7 @@ public class FuncionarioDAO {
         }
     }
 
-    // ── READ: buscar por ID ───────────────────────────────────────────────────
+    // ── READ: buscar por ID 
 
     public Funcionario buscarPorId(int id) {
         String sql = "SELECT * FROM funcionario WHERE id = ?";
@@ -66,7 +66,7 @@ public class FuncionarioDAO {
         return null;
     }
 
-    // ── READ: listar todos ────────────────────────────────────────────────────
+    // ── READ: listar todos
 
     public List<Funcionario> listarTodos() {
         List<Funcionario> funcionarios = new ArrayList<>();
@@ -85,7 +85,7 @@ public class FuncionarioDAO {
         return funcionarios;
     }
 
-    // ── UPDATE ────────────────────────────────────────────────────────────────
+    // ── UPDATE
 
     public boolean atualizar(Funcionario funcionario) {
         String sql = "UPDATE funcionario SET nome = ?, cpf = ?, idade = ?, telefone = ?, " +
@@ -120,7 +120,7 @@ public class FuncionarioDAO {
         }
     }
 
-    // ── DELETE ────────────────────────────────────────────────────────────────
+    // ── DELETE 
 
     public boolean excluir(int id) {
         String sql = "DELETE FROM funcionario WHERE id = ?";
@@ -145,7 +145,7 @@ public class FuncionarioDAO {
         }
     }
 
-    // ── Auxiliar ──────────────────────────────────────────────────────────────
+    // ── Auxiliar
 
     private Funcionario extrairFuncionarioDoResultSet(ResultSet rs) throws SQLException {
         Funcionario f = new Funcionario();

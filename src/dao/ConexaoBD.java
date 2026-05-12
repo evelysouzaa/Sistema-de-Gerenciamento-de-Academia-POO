@@ -5,20 +5,18 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Gerencia a conexão JDBC com o PostgreSQL.
- * Padrão: cada chamada a getConexao() abre uma nova conexão (use try-with-resources para fechar).
+ * Gerencia a conexão JDBC com o PostgreSQL
  */
 public class ConexaoBD {
 
-    // ── Configurações — altere conforme seu ambiente ──────────────────────────
+    // ── Configurações — altere conforme seu ambiente 
     private static final String URL      = "jdbc:postgresql://localhost:5433/academia";
     private static final String USUARIO  = "postgres";
     private static final String SENHA    = "1234";
-    // ─────────────────────────────────────────────────────────────────────────
+
 
     /**
      * Retorna uma nova conexão com o banco de dados.
-     * Sempre use dentro de try-with-resources para garantir o fechamento.
      */
     public static Connection getConexao() throws SQLException {
         try {
@@ -30,7 +28,7 @@ public class ConexaoBD {
     }
 
     /**
-     * Testa a conexão com o banco. Útil para diagnóstico na inicialização.
+     * testa a conexão com o banco
      */
     public static boolean testarConexao() {
         try (Connection conn = getConexao()) {

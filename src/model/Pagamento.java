@@ -1,6 +1,13 @@
 package model;
 
-public class Pagamento {
+import util.Auditavel;
+import util.Calculavel;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Pagamento implements Auditavel, Calculavel {
 
     private int id;
     private Aluno aluno;
@@ -9,6 +16,7 @@ public class Pagamento {
     private String dataVencimento;
     private String dataPagamento;
     private String status;
+    private final List<String> historico = new ArrayList<>();
 
     public Pagamento() {}
 
@@ -20,6 +28,7 @@ public class Pagamento {
         setDataVencimento(dataVencimento);
         this.dataPagamento = null;
         this.status = "Pendente";
+        registrarLog("Pagamento criado para o aluno " + aluno.getNome());
     }
 
     public int getId()                  { return id; }
@@ -29,7 +38,7 @@ public class Pagamento {
     public String getDataVencimento()   { return dataVencimento; }
     public String getDataPagamento()    { return dataPagamento; }
     public String getStatus()           { return status; }
-    public double getValorFinal()       { return valorMensalidade * (1 - desconto / 100.0); }
+    public double getValorFinal()       { return calcularValorFinal(); }
 
     public void setId(int id)                         { if (id <= 0) throw new IllegalArgumentException("ID inválido."); this.id = id; }
     public void setAluno(Aluno aluno)                 { if (aluno == null) throw new IllegalArgumentException("Aluno nulo."); this.aluno = aluno; }
@@ -39,11 +48,38 @@ public class Pagamento {
     public void setDataPagamento(String dataPagamento){ this.dataPagamento = dataPagamento; }
     public void setStatus(String status)              { this.status = status; }
 
+
+    @Override
+    public void registrarLog(String acao) {
+        historico.add(LocalDateTime.now() + " - " + acao);
+    }
+
+    @Override
+    public String obterHistorico() {
+        return String.join("\n", historico);
+    }
+
+    @Override
+    public double calcularTotal() {
+        return valorMensalidade;
+    }
+
+    @Override
+    public double calcularDesconto() {
+        return valorMensalidade * (desconto / 100.0);
+    }
+
+    @Override
+    public double calcularValorFinal() {
+        return calcularTotal() - calcularDesconto();
+    }
+
     public void registrarPagamento(String dataPagamento) {
         if (dataPagamento == null || dataPagamento.trim().isEmpty())
             throw new IllegalArgumentException("Data de pagamento inválida.");
         this.dataPagamento = dataPagamento;
         this.status = "Pago";
+        registrarLog("Pagamento confirmado em " + dataPagamento);
     }
 
     @Override

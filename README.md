@@ -62,15 +62,76 @@ Ao registrar uma avaliação física, o sistema calcula automaticamente o IMC do
 
 ## O que foi implementado
 
-###  1. Classe Abstrata (`Pessoa`)
+### 1. Classe Abstrata (`Pessoa`)
 - `Pessoa` tornou-se **abstrata**, impedindo instanciação direta
 - Atributos comuns mantidos como `protected`: `id`, `nome`, `cpf`, `idade`, `telefone`
 - Método concreto: `obterContato()` — comportamento comum a todos
 - **Método abstrato 1:** `getTipo()` — cada subclasse retorna seu tipo
 - **Método abstrato 2:** `exibirDetalhesEspecificos()` — cada subclasse imprime seus dados próprios
-- Subclasses: `Aluno`, `Instrutor`, `Funcionario` (implementam os dois métodos abstratos)
+- Subclasses:
+  - `Aluno`
+  - `Instrutor`
+  - `Funcionario`
+  
+Todas implementam os métodos abstratos definidos na superclasse.
 
-###  2. Padrão DAO com JDBC
+---
+
+### 2. Implementação de Interfaces
+
+Foram criadas e implementadas interfaces para definir comportamentos reutilizáveis no sistema.
+
+#### Interface `Auditavel`
+Responsável pelo controle de logs e histórico de ações.
+
+#### Interface `Calculavel`
+Responsável pelos cálculos financeiros.
+
+### Classe que implementa as interfaces
+A classe `Pagamento` implementa ambas as interfaces.
+
+Funcionalidades adicionadas:
+- Registro automático de histórico de ações
+- Controle de logs de pagamento
+- Cálculo de desconto progressivo
+- Cálculo do valor final da mensalidade
+- Controle de multa por atraso
+
+---
+
+### 3. Regra de Negócio Adicional
+
+Além do cálculo de IMC e desconto progressivo já existentes, foi implementado:
+
+#### Cálculo de multa por atraso
+Pagamentos vencidos recebem multa automática baseada na quantidade de dias em atraso.
+
+Exemplo:
+- pagamento vencido
+- status pendente
+- multa aplicada automaticamente
+
+---
+
+### 4. Classe de Serviço
+
+Foi criada a classe:
+
+```text
+service/GerenciadorPagamento.java
+```
+
+Responsável por:
+- processar pagamentos
+- validar vencimentos
+- aplicar descontos
+- aplicar multas
+- atualizar status
+
+---
+
+### 5. Padrão DAO com JDBC
+
 | Arquivo | Responsabilidade |
 |---|---|
 | `dao/ConexaoBD.java` | Gerencia conexão JDBC com PostgreSQL |
@@ -79,21 +140,29 @@ Ao registrar uma avaliação física, o sistema calcula automaticamente o IMC do
 | `dao/FuncionarioDAO.java` | CRUD completo da tabela `funcionario` |
 | `dao/PagamentoDAO.java` | CRUD completo da tabela `pagamento` |
 
-Cada DAO usa:
-- `PreparedStatement` (previne SQL Injection)
-- `try-with-resources` (garante fechamento de conexões)
-- `RETURN_GENERATED_KEYS` para obter ID gerado no INSERT
+Cada DAO utiliza:
+- `PreparedStatement`
+- `try-with-resources`
+- `RETURN_GENERATED_KEYS`
 
+Garantindo:
+- prevenção contra SQL Injection
+- fechamento automático de conexões
+- recuperação de IDs gerados automaticamente
 
-##  Conceitos aplicados
+---
+
+## Conceitos aplicados
 
 | Conceito | Onde |
 |---|---|
 | Classe abstrata | `model/Pessoa.java` |
 | Métodos abstratos | `getTipo()` e `exibirDetalhesEspecificos()` |
 | Herança | `Aluno`, `Instrutor`, `Funcionario` extends `Pessoa` |
-| Polimorfismo | `listarAlunos()` chama `getTipo()` e `exibirInfo()` da subclasse correta |
-| Padrão DAO | Todo pacote `dao/` |
+| Polimorfismo | `ArrayList<Pessoa>` |
+| Interfaces | `Auditavel` e `Calculavel` |
 | JDBC + PreparedStatement | Todos os DAOs |
-| try-with-resources | Todos os blocos de conexão |
-| Organização em pacotes | `model`, `dao`, `util` |
+| try-with-resources | Conexões com banco |
+| Padrão DAO | Pacote `dao` |
+| Regra de negócio | Desconto progressivo e multa |
+| Organização em pacotes | `model`, `dao`, `service`, `util` |

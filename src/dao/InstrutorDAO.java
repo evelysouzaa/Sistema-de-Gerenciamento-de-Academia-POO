@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class InstrutorDAO {
 
-    // ── CREATE ────────────────────────────────────────────────────────────────
+    // ── CREATE
 
     public boolean inserir(Instrutor instrutor) {
         String sql = "INSERT INTO instrutor (nome, cpf, idade, telefone, cref, especialidade, salario, alunos_orientados) " +
@@ -46,7 +46,7 @@ public class InstrutorDAO {
         }
     }
 
-    // ── READ: buscar por ID ───────────────────────────────────────────────────
+    // ── READ: buscar por ID 
 
     public Instrutor buscarPorId(int id) {
         String sql = "SELECT * FROM instrutor WHERE id = ?";
@@ -66,7 +66,7 @@ public class InstrutorDAO {
         return null;
     }
 
-    // ── READ: listar todos ────────────────────────────────────────────────────
+    // ── READ: listar todos
 
     public List<Instrutor> listarTodos() {
         List<Instrutor> instrutores = new ArrayList<>();
@@ -85,8 +85,7 @@ public class InstrutorDAO {
         return instrutores;
     }
 
-    // ── UPDATE ────────────────────────────────────────────────────────────────
-
+    // ── UPDATE
     public boolean atualizar(Instrutor instrutor) {
         String sql = "UPDATE instrutor SET nome = ?, cpf = ?, idade = ?, telefone = ?, " +
                      "cref = ?, especialidade = ?, salario = ?, alunos_orientados = ? WHERE id = ?";
@@ -120,7 +119,7 @@ public class InstrutorDAO {
         }
     }
 
-    // ── DELETE ────────────────────────────────────────────────────────────────
+    // ── DELETE
 
     public boolean excluir(int id) {
         String sql = "DELETE FROM instrutor WHERE id = ?";
@@ -145,8 +144,7 @@ public class InstrutorDAO {
         }
     }
 
-    // ── Auxiliar ──────────────────────────────────────────────────────────────
-
+    // ── Auxiliar
     private Instrutor extrairInstrutorDoResultSet(ResultSet rs) throws SQLException {
         Instrutor instrutor = new Instrutor();
         instrutor.setId(rs.getInt("id"));
