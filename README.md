@@ -166,3 +166,5 @@ Garantindo:
 | Padrão DAO | Pacote `dao` |
 | Regra de negócio | Desconto progressivo e multa |
 | Organização em pacotes | `model`, `dao`, `service`, `util` |
+
+[Assista ao vídeo](https://youtu.be/N5fJkv8_NKg)
